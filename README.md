@@ -1,3 +1,3 @@
-# GEMMA_precilinical1
+# GEMMA_precilinical
 
 Scripts for preclinical mouse data analysis
