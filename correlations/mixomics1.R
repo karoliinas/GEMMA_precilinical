@@ -3,9 +3,9 @@ library(mixOmics)
 library(BiocParallel)
 
 # Read normalized and filtered data matrices - samples in rows and variables in columns
-# I have named the mice using strain and the mouse id 
+# Uniquely named mice by using strain and the mouse id 
 # e.g. C57BL/6J_34
-# All the matrices need to have matching samples
+# All the matrices need to have matching samples !!
 
 # The two strains of mice were analyzed separately
 #
@@ -13,6 +13,19 @@ library(BiocParallel)
 #
 # Metadata
 group_data=read.table("Testdata/group_data.txt")
+head(group)
+#               Strain Cohort    Group  N. Experiment.code
+# BALB/c_30      BALB/c      1 Siblings  30               A
+# BALB/c_194     BALB/c      1 Siblings 194               A
+# BALB/c_204     BALB/c      1 Siblings 204               A
+# BALB/c_19      BALB/c      2 Siblings  19               D
+# BALB/c_44      BALB/c      2 Siblings  44               D
+# ...
+# C57BL/6J_927 C57BL/6J      2 Siblings 927               H
+# C57BL/6J_944 C57BL/6J      2 Siblings 944               H
+# C57BL/6J_59  C57BL/6J      1   ASD+GI  59               E
+# C57BL/6J_87  C57BL/6J      1   ASD+GI  87               E
+#
 #
 # C57BL/6J
 qpcr=read.table("Testdata/Qpcr_black.txt")
@@ -21,9 +34,6 @@ metabolites=read.table("Testdata/Metabolites_black.txt")
 microbiome_c=read.table("Testdata/Microbiome_genus_black.txt")
 scfa=read.table("Testdata/Scfa_black.txt")
 behaviour=read.table("Testdata/Behaviour_black.txt")
-
-# vector with the hFMT status
-group=group_data[rownames(qpcr),"Group"]
 
 # BALB/C
 #qpcr=read.table("Qpcr_black.txt")
@@ -34,11 +44,12 @@ group=group_data[rownames(qpcr),"Group"]
 #behaviour=read.table("Behaviour_black.txt")
 
 # vector with the hFMT status
-#group=group_data[group_data$Strain=="BALB/c",]
+group=group_data[rownames(qpcr),"Group"]
+
+# vector with the hFMT status
+group=group_data[group_data$Strain=="BALB/c",]
 
 # Select data blocks to integrate here
-
-# Microbiome Caecum
 xalb=list(qpcr,
           microbiome_c, 
           scfa,
