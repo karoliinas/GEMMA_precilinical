@@ -1,4 +1,4 @@
-# GEMMA_precilinical
+# GEMMA_preclinical
 
 This repository contains scripts for preclinical mouse data analysis in GEMMA project.
 
